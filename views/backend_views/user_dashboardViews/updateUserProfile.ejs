@@ -1,0 +1,147 @@
+<%- include('./common/head') %>
+
+    <body>
+
+        <div class="wrapper">
+
+            <!-- Sidebar -->
+            <%- include('./common/sidebar') %>
+
+                <!-- End Sidebar -->
+
+                <div class="main-panel">
+                    <div class="main-header">
+
+                        <!-- Navbar Header -->
+                        <%- include('./common/navbar') %>
+
+                            <!-- End Navbar -->
+                    </div>
+
+                    <div class="container">
+
+
+                        <div class="page-inner">
+                            <% if (successMsg && successMsg.length> 0) { %>
+                                <div class="alert alert-success" id="flash-message">
+                                    <%= successMsg %>
+                                </div>
+                                <% } %>
+
+                                    <% if (errorMsg && errorMsg.length> 0) { %>
+                                        <div class="alert alert-danger" id="flash-message">
+                                            <%= errorMsg %>
+                                        </div>
+                                        <% } %>
+                                            <br>
+                                            <div
+                                                class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                                                <div>
+                                                    <h3 class="fw-bold mb-3">Update Profile Details</h3>
+                                                </div>
+
+                                            </div>
+
+
+
+                                            <div>
+
+                                                <form class="form-material"
+                                                    action="/user/updateprofile/<%= editData._id%>" method="post"
+                                                    enctype="multipart/form-data">
+
+                                                    <div class="form-group form-default form-static-label">
+                                                        <span class="form-bar"
+                                                            style="color: rgb(47, 74, 109);font-weight: 500;">
+                                                            <strong style="color: rgb(35, 35, 189);">Name:</strong>
+                                                            <%= userdata.name %>
+                                                        </span>
+
+                                                    </div>
+
+                                                    <div class="form-group form-default form-static-label">
+                                                        <span class="form-bar"
+                                                            style="color: rgb(47, 74, 109);font-weight: 500;">
+                                                            <strong style="color: rgb(35, 35, 189);">Mail Id:</strong>
+                                                            <%= userdata.email %>
+                                                        </span>
+
+                                                    </div>
+
+                                                    <div class="form-group form-default form-static-label">
+                                                        <span class="form-bar"
+                                                            style="color: rgb(47, 74, 109);font-weight: 500;"><strong
+                                                                style="color: rgb(35, 35, 189);">Department:</strong>
+                                                            <%= userdata.category ? userdata.category.name
+                                                                : 'No category assigned' %>
+
+                                                        </span>
+
+                                                    </div>
+
+                                                    <div class="form-group form-default form-static-label">
+                                                        <label for="address"
+                                                            style="color: rgb(35, 35, 189); font-weight: 500;">
+                                                            <strong style="color: rgb(35, 35, 189);">Address:</strong>
+                                                        </label>
+                                                        <input type="text" id="address" class="form-control"
+                                                            name="address"
+                                                            value="<%= editData.address || 'No address set' %>"
+                                                            style="width: 400px;border-color: rgb(152, 152, 226);" />
+                                                    </div>
+                                                    <!-- Display Profile Image -->
+
+                                                    <div class="name1">
+                                                        <!-- Profile picture file input (hidden) -->
+                                                        <input type="file" id="profile-picture" name="image"
+                                                            onchange="previewProfilePicture()" hidden>
+
+                                                        <!-- Display the selected profile image preview -->
+                                                        <img id="profile-picture-preview-img"
+                                                            src="http://localhost:1456/<%= editData.image %>"
+                                                            alt="Profile Picture" class="img-fluid" width="120"
+                                                            height="200" style="border-radius: 40%; object-fit: cover;">
+
+                                                        <!-- Label for the file input -->
+                                                        <label for="profile-picture" class="custom-upload-btn"
+                                                            style=" display: block;margin-top: 40px;cursor: pointer;margin-left: 10px;">Upload
+                                                            Profile Picture</label>
+                                                    </div>
+
+
+                                                    <button class="userupdatebutton" style="margin-top: 30px;"><a
+                                                            class="buttontext">Update Profile</a></button>
+
+                                                </form>
+
+                                            </div>
+
+                        </div>
+                    </div>
+
+                    <script>
+                        setTimeout(() => {
+                            const flashMessage = document.getElementById('flash-message');
+                            if (flashMessage) {
+                                flashMessage.style.display = 'none';
+                            }
+                        }, 3000);
+                        function previewProfilePicture() {
+                            const fileInput = document.getElementById('profile-picture');
+                            const file = fileInput.files[0]; // Get the selected file
+                            const previewImg = document.getElementById('profile-picture-preview-img'); // Image preview element
+
+                            if (file) {
+                                // Create a FileReader to read the image file
+                                const reader = new FileReader();
+
+                                // When the file is read, update the image preview
+                                reader.onload = function (event) {
+                                    previewImg.src = event.target.result; // Set the src to the image data URL
+                                };
+
+                                // Read the image file as a data URL
+                                reader.readAsDataURL(file);
+                            }
+                        }
+                    </script>

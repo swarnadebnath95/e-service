@@ -1,0 +1,214 @@
+<%- include('./common/head') %>
+
+
+
+  <body>
+    <%- include('./common/preloader') %>
+
+      <div id="pcoded" class="pcoded">
+        <div class="pcoded-container navbar-wrapper">
+          <%- include('./common/navbar', { notifications: notifications || [] }) %>
+
+            <div class="pcoded-main-container">
+              <div class="pcoded-wrapper">
+                <%- include('./common/sidebar') %>
+
+                  <div class="pcoded-content">
+                    <!-- .......................PAGE HEADER START................... -->
+                    <div class="page-header">
+                      <div class="page-block">
+                        <div class="row align-items-center">
+                          <div class="col-md-8">
+                            <div class="page-header-title">
+                              <h5 class="m-b-10">All Enquery</h5>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- .......................PAGE HEADER END................... -->
+
+
+                    <div class="container mt-5">
+
+                      <% if (successMessage && successMessage.length> 0) { %>
+                        <div class="alert alert-success" id="flash-message">
+                            <%= successMessage %>
+                        </div>
+                        <% } %>
+                            <% if (errorMessage && errorMessage.length> 0) { %>
+                                <div class="alert alert-danger" id="flash-message">
+                                    <%= errorMessage %>
+                                </div>
+                                <% } %>
+                             
+                              <h4>All Tickets</h4>
+                              <br><br>
+
+                              <div class="table-responsive">
+                                <table id="ticketsTable" class="table table-striped table-bordered">
+                                  <thead class="table-dark">
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Name</th>
+                                      <th>Email</th>
+                                      <th>Phone</th>
+                                      <th>Category</th>
+                                      <th>Category Model Number</th>
+                                      <th>Product Issue</th>
+                                      <th>Address</th>
+                                      <th>Issue Date</th>
+                                      <th>Assigned To</th>
+                                      <th>Work Status</th>
+                                      <th>Assigned Date</th>
+                                      <th id="assignEmployeeColumn">Assign Employee</th>
+                                    </tr>
+                                  </thead>
+
+                                  <tbody id="userTable">
+                                    <% if (tasks && tasks.length> 0) { %>
+                                      <% tasks.forEach(function(task, index) { %>
+                                        <tr>
+                                          <td>
+                                            <%= index + 1 %>
+                                          </td>
+                                          <td>
+                                            <%= task.name %>
+                                          </td>
+                                          <td>
+                                            <%= task.email %>
+                                          </td>
+                                          <td>
+                                            <%= task.phone %>
+                                          </td>
+                                          <td>
+                                            <%= task.category %>
+                                          </td>
+                                          <td>
+                                            <%= task.category_model_number %>
+                                          </td>
+                                          <td>
+                                            <%= task.product_issue %>
+                                          </td>
+                                          <td>
+                                            <%= task.address %>
+                                          </td>
+                                          <td>
+                                            <%= new Date(task.date).toLocaleDateString('en-US') %>
+                                          </td>
+                                          <td id="assigned-<%= task._id %>">
+                                            <%= task.assignedTo && task.assignedTo.name ? task.assignedTo.name
+                                              : 'Not Assigned' %>
+                                          </td>
+                                          <td>
+                                            <%= task.status==='assign' ? 'Assigned' : (task.status==='pending'
+                                              ? 'Pending' : 'Complete' ) %>
+                                          </td>
+                                          <td>
+                                            <%= task.assignedDate ? new
+                                              Date(task.assignedDate).toLocaleDateString('en-US') : 'No assign date' %>
+                                          </td>
+                                          <td>
+                                            <% if (task.status === 'assign' || task.status === 'complete') { %>
+                                              <span style="font-weight: 700;">Task Assigned</span>
+                                              <% } else { %>
+                                                <select class="employee-select" data-task="<%= task._id %>" required>
+                                                  <option value="">Select Employee</option>
+                                                  <% let employeeAvailable=false; %>
+                                                    <% if (users && users.length> 0) { %>
+                                                      <% users.forEach(function(user) { %>
+                                                        <% if
+                                                          (user.categoryDetails.name.toString()===task.category.toString())
+                                                          { %>
+                                                          <option value="<%= user._id %>">
+                                                            <%= user.name %>
+                                                          </option>
+                                                          <% employeeAvailable=true; %>
+                                                            <% } %>
+                                                              <% }); %>
+                                                                <% } %>
+                                                                  <% if (!employeeAvailable) { %>
+                                                                    <option disabled>No employees available</option>
+                                                                    <% } %>
+                                                </select>
+                                                <% } %>
+                                          </td>
+                                        </tr>
+                                        <!-- Task details here -->
+                                        <% }); %>
+                                          <% } else { %>
+                                            <tr>
+                                              <td colspan="13">No tickets available</td>
+                                            </tr>
+                                            <% } %>
+                                  </tbody>
+                                </table>
+                              </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>x
+      <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+
+      <script>
+
+        setTimeout(() => {
+          const flashMessage = document.getElementById('flash-message');
+          if (flashMessage) {
+            flashMessage.style.display = 'none';
+          }
+        }, 3000);
+
+        $(document).ready(function () {
+          // Initialize DataTable
+          $("#ticketsTable").DataTable({
+            paging: true,
+            searching: true,
+            info: true,
+            columnDefs: [{ targets: [0, 1, 2], className: "dt-center" }],
+          });
+
+          // Handle the employee assignment
+          $('.employee-select').change(function () {
+            const taskId = $(this).data('task');  // Get the task ID
+            const userId = $(this).val();  // Get the selected user ID
+
+            if (!userId) {
+              alert('Please select an employee.');
+              return;
+            }
+
+            // Send AJAX request to assign employee to the task
+            $.ajax({
+              url: '/admin/assign',
+              type: 'POST',
+              data: { taskId, userId },
+              success: function (response) {
+                if (response.success) {
+                  $('#assigned-' + taskId).text(response.userName);
+                  $('td[data-task="' + taskId + '"]').text(response.workStatus);
+                  $('#assigned-date-' + taskId).text(response.assignedDate);
+                  alert(response.message);
+                  window.location.reload();
+                } else {
+                  alert(response.message);
+                }
+              },
+              error: function (xhr, status, error) {
+                console.error('AJAX error:', error);
+                alert('Error assigning task');
+              }
+            });
+
+          });
+        });
+
+
+      </script>
+  </body>

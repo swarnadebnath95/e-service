@@ -1,0 +1,205 @@
+<%- include('./common/head') %>
+
+    <body>
+
+        <!-- .......................PRE_LOADER START................... -->
+
+        <%- include('./common/preloader') %>
+
+            <!-- .......................PRE_LOADER END................... -->
+
+
+            <div id="pcoded" class="pcoded">
+                <div class="pcoded-overlay-box"></div>
+                <div class="pcoded-container navbar-wrapper">
+
+
+                    <!-- .......................NAVBAR START................... -->
+
+                    <% if (typeof notifications !=='undefined' ) { %>
+                        <%- include('./common/navbar', { notifications: notifications }) %>
+                            <% } else { %>
+                                <%- include('./common/navbar', { notifications: [] }) %>
+                                    <% } %>
+
+                                        <!-- .......................NAVBAR END................... -->
+
+
+                                        <div class="pcoded-main-container">
+                                            <div class="pcoded-wrapper">
+
+
+                                                <!-- .......................SIdEBAR START................... -->
+
+                                                <%- include('./common/sidebar') %>
+
+                                                    <!-- .......................SIdEBAR END................... -->
+
+
+                                                    <div class="pcoded-content">
+
+                                                        <!-- .......................PAGE HEADER START................... -->
+
+
+                                                        <div class="page-header">
+                                                            <div class="page-block">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-md-8">
+                                                                        <% if (successMessage && successMessage.length>
+                                                                            0) { %>
+                                                                            <div class="alert alert-success"
+                                                                                id="flash-message">
+                                                                                <%= successMessage %>
+                                                                            </div>
+                                                                            <% } %>
+                                                                                <% if (errorMessage &&
+                                                                                    errorMessage.length> 0) { %>
+                                                                                    <div class="alert alert-danger"
+                                                                                        id="flash-message">
+                                                                                        <%= errorMessage %>
+                                                                                    </div>
+                                                                                    <% } %>
+                                                                                        <div class="page-header-title">
+                                                                                            <h5 class="m-b-10">View
+                                                                                                Profile</h5>
+                                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-4">
+
+                                                                        <button class="btn btn-info" data-toggle="modal"
+                                                                            data-target="#editModal<%= data.id %>"
+                                                                            style="margin-left: 190px;
+                                                        background-color: rgb(102, 143, 219);
+                                                        border-color: rgb(102, 143, 219);">
+                                                                            <strong> Update Password</strong>
+                                                                        </button>
+
+                                                                        <!-- Modal -->
+                                                                        <div class="modal fade"
+                                                                            id="editModal<%= data.id %>" tabindex="-1"
+                                                                            aria-labelledby="editModalLabel<%= data.id %>"
+                                                                            aria-hidden="true">
+                                                                            <div
+                                                                                class="modal-dialog modal-dialog-centered">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title"
+                                                                                            id="editModalLabel<%= data.id %>"
+                                                                                            style="color: rgb(50, 99, 145); font-weight: 700;">
+                                                                                            Update Your password
+                                                                                        </h5>
+                                                                                        <button type="button"
+                                                                                            class="close"
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <form
+                                                                                            action="/admin/update_password"
+                                                                                            method="POST">
+                                                                                            <div class="form-group">
+                                                                                                <input type="password"
+                                                                                                    class="form-control"
+                                                                                                    placeholder="Enter New Password"
+                                                                                                    name="password" />
+                                                                                            </div>
+
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-success"
+                                                                                                style=" background-color: rgb(102, 143, 219);
+                                                                                  border-color: rgb(102, 143, 219);">
+                                                                                                Update
+                                                                                            </button>
+                                                                                            <button type="button"
+                                                                                                class="btn btn-secondary"
+                                                                                                data-dismiss="modal">
+                                                                                                Close
+                                                                                            </button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <!-- .......................PAGE HEADER END................... -->
+
+
+                                                        <div class="page-body">
+
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <h4>Profile Details:</h4>
+                                                                    <!--<span>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</span>-->
+                                                                </div>
+                                                                <div class="card-block">
+                                                                    <form class="form-material">
+
+                                                                        <div
+                                                                            class="form-group form-default form-static-label">
+                                                                            <img src="http://localhost:1456/<%=uData.image %>"
+                                                                                alt=""
+                                                                                style="height: 70px;border-radius: 50%;">
+
+                                                                        </div>
+
+                                                                        <div
+                                                                            class="form-group form-default form-static-label">
+                                                                            <span class="form-bar"
+                                                                                style="color: rgb(47, 74, 109);font-weight: 500;">
+                                                                                Name: <%= uData.name %>
+                                                                            </span>
+
+                                                                        </div>
+
+                                                                        <div
+                                                                            class="form-group form-default form-static-label">
+                                                                            <span class="form-bar"
+                                                                                style="color: rgb(47, 74, 109);font-weight: 500;">Email
+                                                                                Id: <%= uData.email %></span>
+
+                                                                        </div>
+
+                                                                        <div
+                                                                            class="form-group form-default form-static-label">
+                                                                            <span class="form-bar"
+                                                                                style="color: rgb(47, 74, 109);font-weight: 500;">Phone
+                                                                                Number: <%= uData.phone %></span>
+
+                                                                        </div>
+
+                                                                        <button class="updateButton"><a
+                                                                                href="/admin/edit/<%= uData.id %>"
+                                                                                class="profilecolor">Update
+                                                                                Profile</a></button>
+
+                                                                    </form>
+                                                                </div>
+
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function () {
+                    setTimeout(function () {
+                        $('#flash-message').fadeOut('slow');
+                    }, 3000); // 5 seconds
+                });
+            </script>

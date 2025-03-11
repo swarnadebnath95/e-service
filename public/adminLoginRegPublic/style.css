@@ -1,0 +1,159 @@
+/* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('https://www.shutterstock.com/image-photo/hands-unrecognizable-male-technician-troubleshooting-600nw-2430612775.jpg');
+}
+
+/* Container with background image */
+.container {
+    width: 100%;
+    max-width: 550px;
+    background-image: url('https://t4.ftcdn.net/jpg/09/93/30/89/360_F_993308900_JMq9WjG7u5f6v2Nk2YVR23B4vRXLdkLo.jpg'); /* Background image for the form */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the image */
+    padding: 2rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    color: #fff; /* Make text white for contrast with background */
+}
+
+/* Overlay for better readability */
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for readability */
+    border-radius: 8px;
+    z-index: 0;
+}
+
+h2 {
+    text-align: center;
+    color: #fff; /* White color for contrast */
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="file"] {
+    width: 100%;
+    height: 30px;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background for input */
+    color: #333;
+}
+
+button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #741a80;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    position: relative;
+    z-index: 1;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.toggle-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #ffffff !important;
+    cursor: pointer;
+    text-decoration: underline;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 400px) {
+    .container {
+        padding: 1.5rem;
+    }
+}
+
+
+
+
+
+
+
+/* Container styling, body and other styles remain unchanged */
+
+/* Profile picture upload styling */
+.profile-picture-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 1rem auto; /* Center and add spacing */
+    border: 2px solid #ddd;
+}
+
+.profile-picture-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure image covers the circle */
+    display: block;
+    background-image: url('https://www.shutterstock.com/image-vector/human-icon-people-picture-profile-260nw-1013500675.jpg');
+}
+
+/* Hidden file input */
+#profile-picture {
+    display: none;
+}
+
+/* Custom upload button */
+.custom-upload-btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background-color: #741a80;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1rem;
+}
+
+.custom-upload-btn:hover {
+    background-color: #0056b3;
+}
+

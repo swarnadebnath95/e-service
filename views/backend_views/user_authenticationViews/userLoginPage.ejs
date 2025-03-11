@@ -1,0 +1,43 @@
+<%- include('./common/head') %>
+
+    <div class="container">
+        <!-- Login Form -->
+        <div id="login-form">
+            <% if (successMsg && successMsg.length> 0) { %>
+                <div class="alert alert-success" id="flash-message">
+                    <%= successMsg %>
+                </div>
+                <% } %>
+
+                    <% if (errorMsg && errorMsg.length> 0) { %>
+                        <div class="alert alert-danger" id="flash-message">
+                            <%= errorMsg %>
+                        </div>
+                        <% } %>
+                            <br>
+
+                            <h2>Login</h2>
+
+                            <form id="loginForm" action="/user/login" method="post">
+                                <div class="form-group">
+                                    <label for="login-email">Email:</label>
+                                    <input type="email" id="login-email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="login-password">Password:</label>
+                                    <input type="password" id="login-password" name="password" required>
+                                </div>
+
+                                <button type="submit">Login</button>
+                            </form>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                flashMessage.style.display = 'none';
+            }
+        }, 3000);
+    </script>

@@ -1,0 +1,196 @@
+<%- include('./common/head') %>
+
+    <body>
+
+        <!-- .......................PRE_LOADER START................... -->
+        <%- include('./common/preloader') %>
+            <!-- .......................PRE_LOADER END................... -->
+
+            <div id="pcoded" class="pcoded">
+                <div class="pcoded-overlay-box"></div>
+                <div class="pcoded-container navbar-wrapper">
+
+                    <!-- .......................NAVBAR START................... -->
+                    <% if (typeof notifications !=='undefined' ) { %>
+                        <%- include('./common/navbar', { notifications: notifications }) %>
+                            <% } else { %>
+                                <%- include('./common/navbar', { notifications: [] }) %>
+                                    <% } %>
+                                        <!-- .......................NAVBAR END................... -->
+
+                                        <div class="pcoded-main-container">
+                                            <div class="pcoded-wrapper">
+
+                                                <!-- .......................SIdEBAR START................... -->
+                                                <%- include('./common/sidebar') %>
+                                                    <!-- .......................SIdEBAR END................... -->
+
+                                                    <div class="pcoded-content">
+                                                        <!-- .......................PAGE HEADER START................... -->
+                                                        <div class="page-header">
+                                                            <div class="page-block">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-md-8">
+                                                                        <div class="page-header-title">
+                                                                            <h5 class="m-b-10">All Enquery</h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- .......................PAGE HEADER END................... -->
+
+                                                        <div class="container mt-5">
+                                                            <% if (successMessage && successMessage.length> 0) { %>
+                                                                <div class="alert alert-success" id="flash-message">
+                                                                    <%= successMessage %>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% if (errorMessage && errorMessage.length> 0) { %>
+                                                                        <div class="alert alert-danger" id="flash-message">
+                                                                            <%= errorMessage %>
+                                                                        </div>
+                                                                        <% } %>
+                                                                            <h4>All Enquery Details</h4>
+                                                                            <br>
+
+                                                                            <!-- Search bar for filtering -->
+                                                                            <div class="mb-3">
+                                                                                <input type="text" id="searchInput"
+                                                                                    placeholder="Search by name"
+                                                                                    style="width: 200px;"
+                                                                                    onkeyup="searchTable()">
+                                                                            </div>
+
+
+                                                                            <div class="table-responsive">
+                                                                                <table id="ticketsTable"
+                                                                                    class="table table-striped table-hover table-bordered">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th scope="col">#</th>
+                                                                                            <th>CUSTOMER NAME</th>
+                                                                                            <th>EMAIL</th>
+                                                                                            <th>PHONE NUMBER</th>
+                                                                                            <th>MESSAGE</th>
+
+                                                                                        </tr>
+                                                                                    </thead>
+
+                                                                                    <tbody id="userTable">
+                                                                                        <!-- This is where the dynamic ticket data will be inserted -->
+                                                                                        <% if (tasks && tasks.length> 0)
+                                                                                            { %>
+                                                                                            <% tasks.forEach(function(task,
+                                                                                                index) { %>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <%= index + 1 %>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <%= task.name %>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <%= task.email
+                                                                                                            %>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <%= task.phone
+                                                                                                            %>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <%= task.message
+                                                                                                            %>
+                                                                                                    </td>
+
+
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <% }); %>
+                                                                                                    <% } else { %>
+                                                                                                        <tr>
+                                                                                                            <td
+                                                                                                                colspan="12">
+                                                                                                                No
+                                                                                                                ticket
+                                                                                                                details
+                                                                                                                available
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        <% } %>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                </div>
+            </div>
+
+
+
+            <script>
+
+                function searchTable() {
+
+                    setTimeout(() => {
+                    const flashMessage = document.getElementById('flash-message');
+                    if (flashMessage) {
+                        flashMessage.style.display = 'none';
+                    }
+                }, 3000);
+
+                    const input = document.getElementById('searchInput');  // Get the search input
+                    const searchQuery = input.value;  // Get the search text
+
+                    // Send an AJAX request to the backend to search for tasks
+                    $.ajax({
+                        url: '/admin/search-enquery',  // The endpoint for searching
+                        method: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ searchQuery: searchQuery }),  // Send the search query in the request body
+                        success: function (response) {
+                            // On success, update the table with the filtered tasks
+                            updateTable(response.tasks);  // Assuming response contains tasks
+                        },
+                        error: function (error) {
+                            console.error("Error searching tasks:", error);
+                        }
+                    });
+                }
+
+                // Function to update the table with the search results
+                function updateTable(tasks) {
+                    const tableBody = $('#userTable');  // Get the table body (no need for tbody if the table itself is dynamically updated)
+                    tableBody.empty();  // Clear existing rows in the table
+
+                    if (tasks.length > 0) {
+                        tasks.forEach((task, index) => {
+                            const row = `<tr>
+                <td>${index + 1}</td>
+                <td>${task.name}</td>
+                <td>${task.email}</td>
+                <td>${task.phone}</td>
+                <td>${task.message}</td>
+                
+            </tr>`;
+                            tableBody.append(row);  // Add the row to the table body
+                        });
+                    } else {
+                        tableBody.append('<tr><td colspan="12">No ticket details available</td></tr>');
+                    }
+
+                    // After appending all rows, hide the "Assign Employee" column
+                    $('#assignEmployeeColumn').hide();  // Hide the column header
+                    $('#userTable tbody tr').each(function () {
+                        $(this).find('td:nth-child(10)').hide();  // Hide the 10th column (Assign Employee)
+                    });
+                }
+
+
+
+            </script>
+
+    </body>

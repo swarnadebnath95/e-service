@@ -1,0 +1,114 @@
+<%- include('./common/head') %>
+
+    <body>
+
+
+        <div class="hero_area">
+
+            <!-- .................................NAVBAR SECTION START....................................... -->
+
+            <%- include('./common/navbar') %>
+
+                <!-- .................................NAAVBAR SECTION END....................................... -->
+
+        </div>
+
+
+        <body>
+            <div class="container mt-5">
+
+                <% if (successMessage && successMessage.length> 0) { %>
+                    <div class="alert alert-success" id="flash-message">
+                        <%= successMessage %>
+                    </div>
+                    <% } %>
+                        <% if (errorMessage && errorMessage.length> 0) { %>
+                            <div class="alert alert-danger"
+                                id="flash-message">
+                                <%= errorMessage %>
+                            </div>
+                            <% } %>
+                            <br>
+                <h2 style=" font-size: 24px;color: rgb(42, 74, 134);text-decoration: underline;">Raise a Ticket for
+                    Service</h2>
+                <br>
+
+                <form action="/frontened/createticket" method="POST">
+                    <!-- Name Field -->
+                    <div class="name">
+                        <label for="name" class="form-label">Name:</label><br>
+                        <input type="text" name="name" id="name" class="inputarea" placeholder="Enter your name"
+                            required>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="name1">
+                        <label for="email" class="form-label">Email:</label><br>
+                        <input type="email" name="email" id="email" class="inputarea" placeholder="Enter your email"
+                            required>
+                    </div>
+
+                    <!-- Phone Field -->
+                    <div class="name2">
+                        <label for="phone" class="form-label">Phone No:</label><br>
+                        <input type="tel" name="phone" id="phone" maxlength="10" class="inputarea"
+                            placeholder="Enter your phone number" required>
+                    </div>
+
+                    <!-- Category Selection -->
+                    <div class="name3">
+                        <label for="category" class="form-label">Select Service Category:</label><br>
+                        <select name="category" id="category" class="inputarea" required>
+                            <% if (categories && categories.length > 0) { %>
+                                <% categories.forEach(category => { %>
+                                  <option value="<%= category._id %>">
+                                    <%= category.name %>
+                                  </option>
+                                <% }) %>
+                              <% } else { %>
+                                <option disabled>No categories available</option>
+                              <% } %>
+                        </select>
+                    </div>
+
+                    <!-- Category Model Number -->
+                    <div class="name4">
+                        <label for="category_model_number" class="form-label">Category Model Number:</label><br>
+                        <input type="text" name="category_model_number" id="category_model_number" class="inputarea"
+                            placeholder="Enter product model details" required>
+                    </div>
+
+                    <!-- Product Issue -->
+                    <div class="name5">
+                        <label for="product_issue" class="form-label">Product Issue:</label><br>
+                        <textarea name="product_issue" id="product_issue" class="inputtextarea1"
+                            placeholder="Enter details about the issue" rows="3" required></textarea>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="name6">
+                        <label for="address" class="form-label">Your Full Address:</label><br>
+                        <textarea name="address" id="address" class="inputtextarea2"
+                            placeholder="Enter your full address" rows="4" cols="50" required></textarea>
+                    </div>
+
+                     <!-- date -->
+                     <div class="name5">
+                        <div>
+                            <label for="date"  class="form-label"> Enter Date</label>
+                          <input type="date" name="date" id="date" placeholder="enter assigned work date" class="formbold-form-input" />                        
+                        </div>
+                      </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        </body>
+
+        </html>
+
+
+        <%- include('./common/footer') %>

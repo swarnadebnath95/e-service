@@ -1,0 +1,311 @@
+<%- include('./common/head') %>
+
+    <body>
+
+        <div class="wrapper">
+
+            <!-- Sidebar -->
+            <%- include('./common/sidebar') %>
+
+                <!-- End Sidebar -->
+
+                <div class="main-panel">
+                    <div class="main-header">
+
+                        <!-- Navbar Header -->
+                        <%- include('./common/navbar') %>
+
+                            <!-- End Navbar -->
+                    </div>
+
+                    <div class="container">
+
+
+
+                        <div class="page-inner">
+                            <% if (successMsg && successMsg.length> 0) { %>
+                                <div class="alert alert-success" id="flash-message">
+                                    <%= successMsg %>
+                                </div>
+                                <% } %>
+
+                                    <% if (errorMsg && errorMsg.length> 0) { %>
+                                        <div class="alert alert-danger" id="flash-message">
+                                            <%= errorMsg %>
+                                        </div>
+                                        <% } %>
+                                            <br>
+                            <div
+                                class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                                <div>
+                                    <h3 class="fw-bold mb-3">Dashboard</h3>
+                                    <h6 class="op-7 mb-2">Welcome to User Dashboard</h6>
+                                </div>
+
+                            </div>
+
+
+                            <div class="container">
+                                <!-- Display Working Days in Table -->
+                                <div style="background-color: rgb(158, 169, 221);min-height: 100px;">
+                                    <h5
+                                        style="margin-left: 20px;padding-top: 5px;color: rgb(12, 12, 12);font-weight: 500;">
+                                        Your Weekly Working Status:</h5>
+                                    <br>
+                                    <table id="" class="display table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Day</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Loop through the days to display, starting from Monday to today -->
+                                            <% daysToShow.forEach(function(day) { %>
+                                                <tr>
+                                                    <td>
+                                                        <%= day %>
+                                                    </td>
+                                                    <td>
+                                                        <%= weekdayStatus[day] %>
+                                                    </td>
+                                                </tr>
+                                                <% }); %>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- Read More Button -->
+                                    <div style="text-align: center; margin-top: 10px;">
+                                        <button id="read-more-btn" onclick="toggleRows()"
+                                            style="padding: 5px 10px;margin-bottom: 10px; background-color: #e0e0e0; color: rgb(15, 15, 15); border: none; cursor: pointer;">
+                                            Read More
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <br><br><br>
+
+                            <div
+                                style="background-color: rgb(158, 169, 221);margin-left: 10px;height: 40px;margin-bottom: 100%;">
+
+
+                                <% if (message) { %>
+                                    <!-- Display the 'No pending tasks for today' message -->
+                                    <p>
+                                        <%= message %>
+                                    </p>
+                                    <% } else { %>
+                                        <h5
+                                            style="margin-left: 20px;padding-top: 5px;color: rgb(12, 12, 12);font-weight: 500;">
+                                            Assigned Tasks for Today</h5>
+                                        <br>
+                                        <% if (services.length===0) { %>
+                                            <p style="color: rgb(12, 12, 12);font-weight: 700;">No
+                                                pending tasks for
+                                                today.</p>
+                                            <% } else { %>
+                                                <br>
+
+                                                <div
+                                                    style="overflow-x: auto; white-space: nowrap; margin: 0 auto;max-width: 100%; border: 1px solid #ddd;border: 1px solid #ddd;padding: 10px;">
+
+                                                    <table id="basic-datatables"
+                                                        class="display table table-striped table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Customer Name</th>
+                                                                <th>Customer mail id</th>
+                                                                <th>Customer phone number</th>
+                                                                <th>Category Model_No</th>
+                                                                <th>issue</th>
+                                                                <th>Customer Address</th>
+                                                                <th>Work Status</th>
+                                                                <th>Task Assign Date</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            <% services.forEach(service=> { %>
+                                                                <tr>
+                                                                    <td>
+                                                                        <%= service.name %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= service.email %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= service.phone %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= service.category_model_number %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= service.product_issue %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= service.address %>
+                                                                    </td>
+
+                                                                    <td>
+
+                                                                        <span
+                                                                            class="update-status <%= service.status === 'assign' ? 'text-success' : 'text-warning' %>"
+                                                                            data-service-id="<%= service._id %>">
+                                                                            <%= service.status %>
+                                                                        </span>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <%= (service.assignedDate).toLocaleDateString('en-US',
+                                                                            { year: 'numeric' , month: '2-digit' ,
+                                                                            day: '2-digit' }) %>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <% }); %>
+
+                                                        </tbody>
+                                                    </table>
+                                                    <% } %>
+                                                        <% } %>
+                                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <script src="/userDashboardPublic/assets/js/core/jquery-3.7.1.min.js"></script>
+                    <script src="/userDashboardPublic/assets/js/core/popper.min.js"></script>
+                    <script src="/userDashboardPublic/assets/js/core/bootstrap.min.js"></script>
+
+                    <!-- jQuery Scrollbar -->
+                    <script
+                        src="/userDashboardPublic/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+                    <!-- Datatables -->
+                    <script src="/userDashboardPublic/assets/js/plugin/datatables/datatables.min.js"></script>
+                    <!-- Kaiadmin JS -->
+                    <script src="/userDashboardPublic/assets/js/kaiadmin.min.js"></script>
+                    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+                    <script src="/userDashboardPublic/assets/js/setting-demo2.js"></script>
+
+                    <script>
+
+                        setTimeout(() => {
+                            const flashMessage = document.getElementById('flash-message');
+                            if (flashMessage) {
+                                flashMessage.style.display = 'none';
+                            }
+                        }, 3000);
+
+                        // Function to toggle the visibility of extra rows and button text
+
+                        function toggleRows() {
+                            const extraRows = document.querySelectorAll('.extra-row');
+                            extraRows.forEach(row => {
+                                if (row.style.display === 'none') {
+                                    row.style.display = '';
+                                } else {
+                                    row.style.display = 'none';
+                                }
+                            });
+
+                            const readMoreBtn = document.getElementById('read-more-btn');
+                            if (readMoreBtn.innerText === 'Read More') {
+                                readMoreBtn.innerText = 'Read Less';
+                            } else {
+                                readMoreBtn.innerText = 'Read More';
+                            }
+                        }
+
+
+                        $(document).ready(function () {
+                            $("#basic-datatables").DataTable({});
+
+                            $("#multi-filter-select").DataTable({
+                                pageLength: 5,
+                                initComplete: function () {
+                                    this.api()
+                                        .columns()
+                                        .every(function () {
+                                            var column = this;
+                                            var select = $(
+                                                '<select class="form-select"><option value=""></option></select>'
+                                            )
+                                                .appendTo($(column.footer()).empty())
+                                                .on("change", function () {
+                                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                                    column
+                                                        .search(val ? "^" + val + "$" : "", true, false)
+                                                        .draw();
+                                                });
+
+                                            column
+                                                .data()
+                                                .unique()
+                                                .sort()
+                                                .each(function (d, j) {
+                                                    select.append(
+                                                        '<option value="' + d + '">' + d + "</option>"
+                                                    );
+                                                });
+                                        });
+                                },
+                            });
+
+                            // Add Row
+                            $("#add-row").DataTable({
+                                pageLength: 5,
+                            });
+
+                            var action =
+                                '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+                            $("#addRowButton").click(function () {
+                                $("#add-row")
+                                    .dataTable()
+                                    .fnAddData([
+                                        $("#addName").val(),
+                                        $("#addPosition").val(),
+                                        $("#addOffice").val(),
+                                        action,
+                                    ]);
+                                $("#addRowModal").modal("hide");
+                            });
+                        });
+
+
+
+                        $(document).on('click', '.update-status', function () {
+                            var $this = $(this);  // Store reference to the clicked element
+                            const serviceId = $(this).data('service-id'); // Get the service ID from the span's data attribute
+
+                            $.ajax({
+                                url: '/user/update-status', // Route to update the status
+                                type: 'POST',
+                                data: { serviceId: serviceId },
+                                success: function (response) {
+                                    if (response.success) {
+                                        // Update the status in the table
+                                        $(this).text('Complete'); // Change the text to 'Complete'
+                                        $(this).css('color', 'green'); // Change text color to green (or any other styling)
+                                        $(this).off('click'); // Remove the click handler after the status is updated
+                                        window.location.reload()
+                                    } else {
+                                        alert(response.message);
+
+                                    }
+                                },
+                                error: function () {
+                                    alert('Error updating status.');
+                                }
+                            });
+                        });
+
+                    </script>

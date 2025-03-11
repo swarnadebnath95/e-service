@@ -1,0 +1,49 @@
+<%- include('./common/head') %>
+
+  <div class="container">
+    <!-- Login Form -->
+
+    <div id="login-form">
+      <h2>Login</h2>
+
+      <% if (successMessage && successMessage.length> 0) { %>
+        <div class="alert alert-success" style="color: #ffffff;" id="flash-message">
+          <%= successMessage %>
+        </div>
+        <% } %>
+          <% if (errorMessage && errorMessage.length> 0) { %>
+            <div class="alert alert-danger" style="color: #ffffff;" id="flash-message">
+              <%= errorMessage %>
+            </div>
+            <% } %>
+              <br><br>
+
+              <form id="loginForm" action="/admin/login" method="post">
+                <div class="form-group">
+                  <label for="login-email">Email:</label>
+                  <input type="email" id="login-email" name="email" required />
+                </div>
+                <div class="form-group">
+                  <label for="login-password">Password:</label>
+                  <input type="password" id="login-password" name="password" required />
+                </div>
+                <div class="form-group">
+                  <a href="/admin/forget-passwordPage" style="color: #ffffff !important">
+                    Forget Passwword?</a>
+                </div>
+                <button type="submit">Login</button>
+                <div class="toggle-link">
+                  <a href="/admin/registerpage" style="color: #ffffff !important">Don't have an account? Register</a>
+                </div>
+              </form>
+    </div>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      const flashMessage = document.getElementById('flash-message');
+      if (flashMessage) {
+        flashMessage.style.display = 'none';
+      }
+    }, 3000);
+  </script>

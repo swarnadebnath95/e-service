@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Frontened Website</title>
+
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="/customerPublic/css/bootstrap.css" />
+    <!-- font awesome style -->
+    <link rel="stylesheet" type="text/css" href="/customerPublic/css/font-awesome.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/customerPublic/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/customerPublic/css/responsive.css" rel="stylesheet" />
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+
+
+    <style>
+        .navstyle {
+            background-color: black;
+            height: 50px;
+        }
+
+        .navoption {
+            padding-top: 10px;
+        }
+
+        .calling {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+        }
+
+        .email {
+            color: white;
+            text-decoration: none;
+            margin-left: 360px;
+        }
+
+        .logincus {
+            color: white;
+            text-decoration: none;
+            margin-left: 460px;
+        }
+
+        .update {
+            width: 130px;
+            height: 40px;
+            margin-top: 30px;
+            border-color: blue;
+            color: rgb(43, 43, 177);
+            font-weight: 700;
+        }
+
+        .update:hover {
+            border-color: rgb(45, 45, 201);
+            color: rgb(255, 255, 255);
+            font-weight: 700;
+            background-color: rgb(45, 45, 201);
+        }
+        .viewprofilename{
+            width: 300px;
+            height: 35px;
+            background-color: rgb(232, 236, 252);
+            border-top-color: aliceblue;
+            border-bottom-color: aliceblue;
+            border-left-color: aliceblue;
+            border-right-color: aliceblue;
+            color: rgb(51, 51, 173);
+            font-weight: 700;
+        }
+        .viewprofilename:hover{          
+            background-color: rgb(226, 228, 238);
+        }
+        .ticketheader{
+            font-size: 20px;
+            font-weight: 700;
+            color: rgb(30, 30, 155);
+        }
+        .review{
+            width: 140px;
+            height: 40px;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            margin-left: 520px;
+            border-bottom-color: rgb(175, 175, 238);
+            border-top-color: rgb(175, 175, 238);
+            border-right-color: rgb(175, 175, 238);
+            border-left-color: rgb(175, 175, 238);
+            color:rgb(38, 38, 160);
+            background-color: white;
+            font-weight: 600;
+        }
+        .review:hover{
+            color:white;
+            background-color: rgb(38, 38, 160);
+        }
+    </style>
+
+
+</head>
+
+<div>
+    <nav class="navstyle">
+        <div class="navoption">
+            <a href="" class="calling">
+                <i class="fa fa-phone" aria-hidden="true" style="color: rgb(230, 93, 43);"></i>
+                <span>
+                    Call : +01 123455678990
+                </span>
+            </a>
+            <a href="" class="email">
+                <i class="fa fa-envelope" aria-hidden="true" style="color: rgb(230, 93, 43);"></i>
+                <span>
+                    Email : demo@gmail.com
+                </span>
+            </a>
+
+            <a href="/frontened/account" class="logincus">
+                <i class="fa fa-sign-in" aria-hidden="true" style="color: rgb(230, 93, 43);"></i>
+                <span >
+                   <a href="/frontened/account" style="color: white;text-decoration: none;"> back</a>
+                </span>
+            </a>
+
+        </div>
+    </nav>
+</div>
+
+
+<div class="container mt-5">
+    <h5 style="color: rgb(33, 35, 151);font-weight: 700;">Submit Your Review</h5>
+    <br>
+    <form action="/frontened/submit-review" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="service" class="form-label" style="color: rgb(49, 49, 187);font-weight: 500;">Enter Your Name</label>
+            <input type="text" class="form-control" id="service" name="service" placeholder="Enter your name" required>
+        </div>
+        <div class="mb-3">
+            <label for="rating" class="form-label" style="color: rgb(49, 49, 187);font-weight: 500;">give Rating(1-5)</label>
+            <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" required>
+        </div>
+        <div class="mb-3">
+            <label for="review" class="form-label" style="color: rgb(49, 49, 187);font-weight: 500;">Comment</label>
+            <textarea class="form-control" id="review" name="review" rows="4" placeholder="Write your review" required></textarea>
+        </div>
+
+
+        <div class="form-group">
+            <div>
+                <img id="image-preview" src="#" alt="Preview will appear here" style="max-width: 100%; max-height: 300px; display: none;">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="image" style="color: rgb(49, 49, 187);font-weight: 500;">Upload a Picture</label>
+            <input type="file" class="form-control" id="image" name="image" accept="" onchange="previewImage(event)">
+        </div>
+       
+        <button type="submit" class="review">Submit Review</button>
+    </form>
+</div>
+
+
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById("image-preview");
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = "block"; // Make the preview visible
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = "#";
+            preview.style.display = "none"; // Hide the preview if no file is selected
+        }
+    }
+</script>
+

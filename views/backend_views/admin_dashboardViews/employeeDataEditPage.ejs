@@ -1,0 +1,103 @@
+<%- include('./common/head') %>
+
+  <body>
+    <!-- .......................PRE_LOADER START................... -->
+
+    <%- include('./common/preloader') %>
+
+      <!-- .......................PRE_LOADER END................... -->
+
+      <div id="pcoded" class="pcoded">
+        <div class="pcoded-overlay-box"></div>
+        <div class="pcoded-container navbar-wrapper">
+          <!-- .......................NAVBAR START................... -->
+
+          <% if (typeof notifications !=='undefined' ) { %> <%- include('./common/navbar', { notifications:
+              notifications }) %>
+              <% } else { %> <%- include('./common/navbar', { notifications: [] }) %>
+                  <% } %>
+
+                    <!-- .......................NAVBAR END................... -->
+
+                    <div class="pcoded-main-container">
+                      <div class="pcoded-wrapper">
+                        <!-- .......................SIdEBAR START................... -->
+
+                        <%- include('./common/sidebar') %>
+
+                          <!-- .......................SIdEBAR END................... -->
+
+                          <div class="pcoded-content">
+                            <!-- .......................PAGE HEADER START................... -->
+
+                            <div class="page-header">
+                              <div class="page-block">
+                                <div class="row align-items-center">
+                                  <div class="col-md-8">
+                                    <div class="page-header-title">
+                                      <h5 class="m-b-10">Create Employee</h5>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- .......................PAGE HEADER END................... -->
+
+                            <div class="container mt-5">
+                              <% if (successMessage && successMessage.length> 0) { %>
+                                <div class="alert alert-success" id="flash-message">
+                                    <%= successMessage %>
+                                </div>
+                                <% } %>
+                                    <% if (errorMessage && errorMessage.length> 0) { %>
+                                        <div class="alert alert-danger" id="flash-message">
+                                            <%= errorMessage %>
+                                        </div>
+                                        <% } %>
+                                      <h4 style="
+                  font-size: 24px;
+                  color: rgb(69, 77, 94);
+                  margin-left: 100px;
+                ">
+                                        Update Employee Data
+                                      </h4>
+                                      <br />
+
+                                      <form action="/admin/updateemployeedata/<%= employeedata._id %>" method="POST" style="margin-left: 100px">
+                                        <!-- Name Field -->
+                                        <div class="name">
+                                          <label for="name" class="form-label">Name:</label><br />
+                                          <input type="text" value="<%= employeedata.name %>" name="name" id="name" class="viewprofilename"
+                                            placeholder="Enter your name" required />
+                                        </div>
+
+                                        <!-- Email Field -->
+                                        <div class="name1">
+                                          <label for="email" class="form-label2">Email:</label><br />
+                                          <input type="email" value="<%= employeedata.email %>" name="email" id="email" class="viewprofilename"
+                                            placeholder="Enter your email" required />
+                                        </div>
+
+                                        
+
+                                        <!-- Submit Button -->
+                                        <button type="submit" class="createButton">Update</button>
+                                      </form>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+         setTimeout(() => {
+                    const flashMessage = document.getElementById('flash-message');
+                    if (flashMessage) {
+                        flashMessage.style.display = 'none';
+                    }
+                }, 3000);
+      </script>
+  </body>

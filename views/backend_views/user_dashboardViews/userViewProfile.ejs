@@ -1,0 +1,119 @@
+<%- include('./common/head') %>
+
+    <body>
+
+        <div class="wrapper">
+
+            <!-- Sidebar -->
+            <%- include('./common/sidebar') %>
+
+                <!-- End Sidebar -->
+
+                <div class="main-panel">
+                    <div class="main-header">
+
+                        <!-- Navbar Header -->
+                        <%- include('./common/navbar') %>
+
+                            <!-- End Navbar -->
+                    </div>
+
+                    <div class="container">
+
+                        <div class="page-inner">
+                            <% if (successMsg && successMsg.length> 0) { %>
+                                <div class="alert alert-success" id="flash-message">
+                                    <%= successMsg %>
+                                </div>
+                                <% } %>
+
+                                    <% if (errorMsg && errorMsg.length> 0) { %>
+                                        <div class="alert alert-danger" id="flash-message">
+                                            <%= errorMsg %>
+                                        </div>
+                                        <% } %>
+                                            <br>
+                                            <div
+                                                class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                                                <div>
+                                                    <h3 class="fw-bold mb-3">Profile Details</h3>
+                                                </div>
+
+                                            </div>
+
+
+
+                                            <div>
+
+                                                <form class="form-material">
+
+                                                    <!-- Display Profile Image -->
+                                                    <div class="form-group form-default form-static-label">
+
+                                                        <% if (userdata.image) { %>
+                                                            <img src="http://localhost:1456/<%= userdata.image %>"
+                                                                alt="Profile Image"
+                                                                style="width: 100px;height: 80px;border-radius: 30px;">
+                                                            <% } else { %>
+                                                                <p>No profile image uploaded</p>
+                                                                <% } %>
+                                                    </div>
+
+                                                    <div class="form-group form-default form-static-label">
+                                                        <span class="form-bar"
+                                                            style="color: rgb(47, 74, 109);font-weight: 500;">
+                                                            <strong style="color: rgb(35, 35, 189);">Name:</strong>
+                                                            <%= userdata.name %>
+                                                        </span>
+
+                                                    </div>
+
+                                                    <div class="form-group form-default form-static-label">
+                                                        <span class="form-bar"
+                                                            style="color: rgb(47, 74, 109);font-weight: 500;">
+                                                            <strong style="color: rgb(35, 35, 189);">Mail Id:</strong>
+                                                            <%= userdata.email %>
+                                                        </span>
+
+                                                    </div>
+
+                                                    <div class="form-group form-default form-static-label">
+                                                        <span class="form-bar"
+                                                            style="color: rgb(47, 74, 109);font-weight: 500;"><strong
+                                                                style="color: rgb(35, 35, 189);">Department:</strong>
+                                                            <%= userdata.category ? userdata.category.name
+                                                                : 'No category assigned' %>
+                                                        </span>
+
+                                                    </div>
+
+                                                    <div class="form-group form-default form-static-label">
+
+                                                        <span class="form-bar"
+                                                            style="color: rgb(47, 74, 109);font-weight: 500;"><strong
+                                                                style="color: rgb(35, 35, 189);">Address:</strong>
+                                                            <%= userdata.address || 'No address set' %>
+                                                        </span>
+
+                                                    </div>
+                                                    <br>
+
+                                                    <button class="userupdatebutton"><a
+                                                            href="/user/editprofile/<%= userdata.id %>"
+                                                            class="buttontext">Update Profile details</a></button>
+
+                                                </form>
+
+                                            </div>
+
+                        </div>
+                    </div>
+
+                    <script>
+                        setTimeout(() => {
+                            const flashMessage = document.getElementById('flash-message');
+                            if (flashMessage) {
+                                flashMessage.style.display = 'none';
+                            }
+                        }, 3000);
+                    </script>

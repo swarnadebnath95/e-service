@@ -1,0 +1,149 @@
+<%- include('./common/head') %>
+
+<style>
+    /* Make sure this applies to both the header and data cells */
+    .details-column, .details-header {
+        word-wrap: break-word;   /* Allows long words to break and wrap onto the next line */
+        white-space: normal;     /* Ensures text can wrap */
+        max-width: 200px;        /* You can adjust this width as per your needs */
+        overflow: hidden;        /* Hide overflow if needed */
+    }
+    
+    .details-text {
+        white-space: normal; /* Ensures text inside this div wraps */
+        word-wrap: break-word;
+    }
+    
+    
+    </style>
+
+    <body>
+
+        <!-- .......................PRE_LOADER START................... -->
+        <%- include('./common/preloader') %>
+            <!-- .......................PRE_LOADER END................... -->
+
+            <div id="pcoded" class="pcoded">
+                <div class="pcoded-overlay-box"></div>
+                <div class="pcoded-container navbar-wrapper">
+
+                    <!-- .......................NAVBAR START................... -->
+                    <% if (typeof notifications !=='undefined' ) { %>
+                        <%- include('./common/navbar', { notifications: notifications }) %>
+                            <% } else { %>
+                                <%- include('./common/navbar', { notifications: [] }) %>
+                                    <% } %>
+                                        <!-- .......................NAVBAR END................... -->
+
+                                        <div class="pcoded-main-container">
+                                            <div class="pcoded-wrapper">
+
+                                                <!-- .......................SIdEBAR START................... -->
+                                                <%- include('./common/sidebar') %>
+                                                    <!-- .......................SIdEBAR END................... -->
+
+                                                    <div class="pcoded-content">
+                                                        <!-- .......................PAGE HEADER START................... -->
+                                                        <div class="page-header">
+                                                            <div class="page-block">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-md-8">
+                                                                        <div class="page-header-title">
+                                                                            <h5 class="m-b-10">Frontened Dashboard List Details</h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- .......................PAGE HEADER END................... -->
+
+                                                        <div class="container mt-5">
+                                                            <% if (successMessage && successMessage.length> 0) { %>
+                                                                <div class="alert alert-success" id="flash-message">
+                                                                    <%= successMessage %>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% if (errorMessage && errorMessage.length> 0) { %>
+                                                                        <div class="alert alert-danger"
+                                                                            id="flash-message">
+                                                                            <%= errorMessage %>
+                                                                        </div>
+                                                                        <% } %>
+                                                                            <h4>Frontened Dashboard List Details</h4>
+                                                                            <br>
+
+                                                                            <div class="table-responsive">
+                                                                                <table id="ticketsTable"
+                                                                                    class="table table-striped table-hover table-bordered">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th scope="col">#</th>
+                                                                                            <th>TITLE</th>
+                                                                                            <th>IMAGE</th>
+                                                                                            <th class="details-header">DETAILS</th>
+                                                                                            <th></th>
+                                                                                            <th colspan="2">ACTION</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <% let count = 0;
+                                                                                    if(frontenedData.length > 0) {%>
+                                                                                    <tbody>
+                                                                                        <!-- This is where the dynamic ticket data will be inserted -->
+                                                                                        <% for(let item of frontenedData) {%>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <%=++count%>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%=item.title%>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <img src="http://localhost:1456/<%= item.image %>" height="50px" width="50px" alt="">
+                                                                                            </td>
+                                                                                            <td class="details-column">
+                                                                                                <div class="details-text">
+                                                                                                    <%= item.description %> <!-- Description here will wrap -->
+                                                                                                </div>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <a href="/admin/editfronteneddata/<%= item._id %>" class="" title="Update">
+                                                                                                  <i class="fa-solid fa-pen-to-square"></i>
+                                                                                                </a>
+                                                                                              </td>
+
+                                                                                            <% if (item.status!=0) { %>
+                                                                                                <td><a href="/admin/frontenedthumbsUp/<%=item._id%>" class="btn btn-success"><i class="fa fa-thumbs-up"></i></a></td>
+                                
+                                                                                                <%} else { %>
+                                                                                                    <td><a href="/admin/frontenedthumbsDown/<%=item._id%>" class="btn btn-danger"><i class="fa fa-thumbs-down"></i></a></td>
+                                
+                                                                                                <% } %>
+
+                                                                                        </tr>
+
+                                                                                    </tbody>
+                                                                                    <%}  }else {%>
+                                                                                        <h1>No data found</h1>
+                                                                                        <%}%>
+                                                                                </table>
+                                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                </div>
+            </div>
+
+            <script>
+                setTimeout(() => {
+                    const flashMessage = document.getElementById('flash-message');
+                    if (flashMessage) {
+                        flashMessage.style.display = 'none';
+                    }
+                }, 3000);
+            </script>
+
+
+    </body>

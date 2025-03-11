@@ -1,0 +1,234 @@
+<%- include('./common/head') %>
+
+    <body>
+
+        <div class="hero_area">
+
+            <!-- .................................NAVBAR SECTION START....................................... -->
+
+            <%- include('./common/navbar') %>
+
+                <!-- .................................NAAVBAR SECTION END....................................... -->
+
+
+
+                <!-- slider section -->
+                <section class="slider_section ">
+                    <div class="container ">
+
+                        <% if (successMessage && successMessage.length> 0) { %>
+                            <div class="alert alert-success" id="flash-message">
+                                <%= successMessage %>
+                            </div>
+                            <% } %>
+                                <% if (errorMessage && errorMessage.length> 0) { %>
+                                    <div class="alert alert-danger" id="flash-message">
+                                        <%= errorMessage %>
+                                    </div>
+                                    <% } %>
+
+                                        <div class="row">
+
+                                            <% let count=0; if((fronteneddata && fronteneddata.length> 0)) { %>
+
+                                                <% fronteneddata.forEach(function(item) { if(item.status !=0) { %>
+
+                                                    <div class="col-md-6 ">
+                                                        <div class="detail-box">
+                                                            <h1>
+                                                                <%= item.title %>
+                                                            </h1>
+                                                            <p>
+                                                                <%= item.description %>
+                                                            </p>
+                                                            <a href="/frontened/applyForService">
+                                                                Apply For Service
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6" style="height: 600px;">
+                                                        <div class="img-box">
+                                                            <img src="/<%= item.image %>" alt="" class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                    <% } }); %>
+
+                                                        <% } else { %>
+                                                            <h1>No data found</h1>
+                                                            <% } %>
+                                        </div>
+                    </div>
+                </section>
+                <!-- end slider section -->
+        </div>
+
+
+
+        <!-- .................................FEATURE SECTION START....................................... -->
+
+        <%- include('./featureSection') %>
+
+            <!-- ................................FEATURE SECTION END....................................... -->
+
+
+
+            <!-- .................................ABOUT SECTION START....................................... -->
+
+
+            <%- include('./aboutSection', { data: aboutdata }) %>
+
+
+                <!-- .................................ABOUT SECTION END....................................... -->
+
+
+
+                <!-- .................................SERVICE SECTION START....................................... -->
+
+
+                <%- include('./serviceSection', { serviceDashboardData: serviceDashboardData, cdata: cdata }) %>
+
+
+                    <!-- .................................SERVICE SECTION END....................................... -->
+
+
+                    <!-- client section -->
+
+                    <section class="client_section ">
+                        <div class="container">
+                            <div class="heading_container heading_center">
+                                <h2>
+                                    What Our Clients Say
+                                </h2>
+                            </div>
+
+
+                            <div class="carousel-wrap layout_padding2-top ">
+                                <div class="owl-carousel">
+
+                                    <% review.forEach(reviews=> { %>
+
+                                        <div class="item">
+                                            <div class="box">
+                                                <div class="client_id">
+                                                    <div class="img-box">
+                                                        <img src="http://localhost:1456/<%= reviews.image %>" alt="">
+                                                    </div>
+                                                    <div class="client_detail">
+                                                        <div class="client_info">
+                                                            <h6>
+                                                                <%= reviews.service%>
+                                                            </h6>
+
+                                                            <% for (let i=1; i <=5; i++) { %>
+                                                                <i class="fa fa-star <%= i <= reviews.rating ? 'text-warning' : 'text-muted' %>"
+                                                                    aria-hidden="true"></i>
+                                                                <% } %>
+                                                        </div>
+                                                        <i class="fa fa-quote-left" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="client_text">
+                                                    <p>
+                                                        <%= reviews.review %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }); %>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- end client section -->
+
+
+                    <!-- info section -->
+                    <section class="info_section ">
+                        <div class="container">
+                            <h4>
+                                Get In Touch
+                            </h4>
+                            <div class="row">
+                                <div class="col-lg-10 mx-auto">
+                                    <div class="info_items">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <a href="">
+                                                    <div class="item ">
+                                                        <div class="img-box ">
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                        </div>
+                                                        <p>
+                                                            Lorem Ipsum is simply dummy text
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <a href="">
+                                                    <div class="item ">
+                                                        <div class="img-box ">
+                                                            <i class="fa fa-phone" aria-hidden="true"></i>
+                                                        </div>
+                                                        <p>
+                                                            +02 1234567890
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <a href="">
+                                                    <div class="item ">
+                                                        <div class="img-box">
+                                                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                                                        </div>
+                                                        <p>
+                                                            demo@gmail.com
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="social-box">
+                            <h4>
+                                Follow Us
+                            </h4>
+                            <div class="box">
+                                <a href="">
+                                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-youtube" aria-hidden="true"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+
+
+                    <!-- end info_section -->
+
+                    <!-- footer section -->
+                    <%- include('./common/footer') %>
+
+                        <script>
+                            setTimeout(() => {
+                                const flashMessage = document.getElementById('flash-message');
+                                if (flashMessage) {
+                                    flashMessage.style.display = 'none';
+                                }
+                            }, 3000);
+                        </script>

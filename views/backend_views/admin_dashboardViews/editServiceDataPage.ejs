@@ -1,0 +1,169 @@
+<%- include('./common/head') %>
+
+    <style>
+        .profile-picture-preview {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+    <body>
+        <!-- .......................PRE_LOADER START................... -->
+
+        <%- include('./common/preloader') %>
+
+            <!-- .......................PRE_LOADER END................... -->
+
+            <div id="pcoded" class="pcoded">
+                <div class="pcoded-overlay-box"></div>
+                <div class="pcoded-container navbar-wrapper">
+                    <!-- .......................NAVBAR START................... -->
+
+                    <% if (typeof notifications !=='undefined' ) { %> <%- include('./common/navbar', { notifications:
+                            notifications }) %>
+                            <% } else { %> <%- include('./common/navbar', { notifications: [] }) %>
+                                    <% } %>
+
+                                        <!-- .......................NAVBAR END................... -->
+
+                                        <div class="pcoded-main-container">
+                                            <div class="pcoded-wrapper">
+                                                <!-- .......................SIdEBAR START................... -->
+
+                                                <%- include('./common/sidebar') %>
+
+                                                    <!-- .......................SIdEBAR END................... -->
+
+                                                    <div class="pcoded-content">
+                                                        <!-- .......................PAGE HEADER START................... -->
+
+                                                        <div class="page-header">
+                                                            <div class="page-block">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-md-8">
+                                                                        <div class="page-header-title">
+                                                                            <h5 class="m-b-10">Update Service Details</h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- .......................PAGE HEADER END................... -->
+
+                                                        <div class="container mt-5">
+                                                            <% if (successMessage && successMessage.length> 0) { %>
+                                                                <div class="alert alert-success" id="flash-message">
+                                                                    <%= successMessage %>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% if (errorMessage && errorMessage.length> 0) { %>
+                                                                        <div class="alert alert-danger"
+                                                                            id="flash-message">
+                                                                            <%= errorMessage %>
+                                                                        </div>
+                                                                        <% } %>
+                                                                            <h4 style="
+                  font-size: 24px;
+                  color: rgb(69, 77, 94);
+                  margin-left: 100px;
+                ">
+                                                                                Update Service Details
+                                                                            </h4>
+                                                                            <br />
+
+                                                                            <form action="/admin/updateserviedata/<%=edit._id%>" method="post" enctype="multipart/form-data"
+                                                                                style="margin-left: 100px">
+                                                                                <!-- Name Field -->
+                                                                                <div class="name">
+                                                                                    <label for="name"
+                                                                                        class="form-label">About
+                                                                                        title:</label><br />
+                                                                                    <input type="text" name="title"
+                                                                                    value="<%= edit.title %>"
+                                                                                        id="title"
+                                                                                        class="viewprofilename"
+                                                                                        placeholder="Enter title"
+                                                                                        required />
+                                                                                </div>
+
+                                                                                <!-- detail Field -->
+                                                                                <div class="name1">
+                                                                                    <label for="description"
+                                                                                        class="form-label2">description:</label><br />
+                                                                                    <input type="text"
+                                                                                        name="description"
+                                                                                        value="<%= edit.description %>"
+                                                                                        id="description"
+                                                                                        class="viewprofilename"
+                                                                                        placeholder="Enter description"
+                                                                                        required />
+                                                                                </div>
+                                                                                <br>
+
+                                                                                <div class="name1">
+                                                                                    <input type="file"
+                                                                                        id="profile-picture"
+                                                                                        name="image"
+                                                                                        onchange="previewProfilePicture()"
+                                                                                        hidden>
+                                                                                    <img id="profile-picture-preview-img"
+                                                                                        src="http://localhost:1456/<%= edit.image %>"
+                                                                                        alt=""
+                                                                                        style="height: 70px;border-radius: 50%;">
+                                                                                    <input type="file"
+                                                                                        id="profile-picture"
+                                                                                        name="image"
+                                                                                        onchange="previewProfilePicture()"
+                                                                                        hidden>
+
+                                                                                    <label for="profile-picture"
+                                                                                        class="custom-upload-btn"
+                                                                                        style=" display: block;margin-top: 20px;cursor: pointer;">Upload
+                                                                                        Profile
+                                                                                        Picture</label>
+                                                                                </div>
+
+
+                                                                                <!-- Submit Button -->
+                                                                                <button type="submit"
+                                                                                    class="createButton">Update</button>
+                                                                            </form>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+            <script>
+
+                setTimeout(() => {
+                    const flashMessage = document.getElementById('flash-message');
+                    if (flashMessage) {
+                        flashMessage.style.display = 'none';
+                    }
+                }, 3000);
+
+
+                // Function to preview the selected profile picture
+                function previewProfilePicture() {
+                    const fileInput = document.getElementById('profile-picture');  // Get the file input element
+                    const file = fileInput.files[0];  // Get the first selected file
+                    const previewImage = document.getElementById('profile-picture-preview-img');  // Get the image element
+
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            previewImage.src = e.target.result;  // Set the image source to the selected file's data URL
+                        };
+                        reader.readAsDataURL(file);  // Read the file as a Data URL
+                    }
+                }
+            </script>
+
+    </body>

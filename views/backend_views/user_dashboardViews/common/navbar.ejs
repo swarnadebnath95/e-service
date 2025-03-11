@@ -1,0 +1,184 @@
+<nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+    style="background-color: rgb(179, 179, 224);">
+    <div class="container-fluid">
+
+       
+
+                        <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                            <li class="nav-item topbar-user dropdown hidden-caret">
+                                <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
+                                    aria-expanded="false">
+                                    <div class="avatar-sm">
+                                        <img src="http://localhost:1456/<%= userdata.image %>" alt="..."
+                                            class="avatar-img rounded-circle" />
+                                    </div>
+                                    <span class="profile-username">
+                                        <span class="fw-bold">
+                                            <%= userdata.name %>
+                                        </span>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user animated fadeIn">
+                                    <div class="dropdown-user-scroll scrollbar-outer">
+                                        <li>
+                                            <div class="user-box">
+                                                <div class="avatar-lg">
+                                                    <img src="http://localhost:1456/<%= userdata.image %>"
+                                                        alt="image profile" class="avatar-img rounded" />
+                                                </div>
+                                                <div class="u-text">
+                                                    <h4>
+                                                        <%= userdata.name %>
+                                                    </h4>
+                                                    <p class="text-muted">
+                                                        <%= userdata.email %>
+                                                    </p>
+                                                    <a href="/user/viewprofile" class="btn btn-xs btn-secondary btn-sm"
+                                                        style="color: rgb(21, 21, 22);">View Profile</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#" id="openModalBtn">Update Password</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="/user/logout">Logout</a>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </li>
+                        </ul>
+    </div>
+</nav>
+
+<!-- Modal for Updating Password -->
+<div class="modal" id="updatePasswordModal" style="height: 330px;width: 500px;background-color: rgb(172, 172, 196);">
+    <div class="modal-dialog" style="background-color: rgb(172, 172, 196);">
+        <div class="modal-content" style="background-color: rgb(172, 172, 196);">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updatePasswordModalLabel" style="font-weight: 700;">Update Password</h5>
+                <button type="button" class="btn-close" id="closeModalBtn" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/user/update_password" method="POST">
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label" style="font-weight: 700;">New Password</label>
+                        <input type="password" class="form-control" id="newPassword" name="password"
+                            placeholder="Enter New Password" required>
+                    </div>
+
+                    <button type="submit" class="modalbutton">Update Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Backdrop (this is what will fade the background) -->
+<div id="modalBackdrop" class="modal-backdrop"></div>
+
+<script>
+
+    
+    // Get references to the modal, backdrop, and buttons
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modal = document.getElementById('updatePasswordModal');
+    const backdrop = document.getElementById('modalBackdrop');
+
+    // Show the modal when the "Update Password" button is clicked
+    openModalBtn.addEventListener('click', () => {
+        modal.style.display = 'block';
+        backdrop.style.display = 'block'; // Ensure the backdrop is displayed
+        setTimeout(() => {
+            backdrop.style.opacity = '1'; // Fade-in the backdrop
+        }, 10);
+    });
+
+    // Hide the modal when the close button is clicked
+    closeModalBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        backdrop.style.opacity = '0'; // Fade-out the backdrop
+        setTimeout(() => {
+            backdrop.style.display = 'none'; // Hide backdrop after fade-out
+        }, 300); // Ensure backdrop hides after fade-out completes
+    });
+
+    // Close the modal if the user clicks anywhere outside the modal (on the backdrop)
+    window.addEventListener('click', (e) => {
+        if (e.target === backdrop) {
+            modal.style.display = 'none';
+            backdrop.style.opacity = '0'; // Fade-out the backdrop
+            setTimeout(() => {
+                backdrop.style.display = 'none'; // Hide backdrop after fade-out completes
+            }, 300); // Ensure backdrop hides after fade-out completes
+        }
+    });
+</script>
+
+<!-- Custom CSS for Modal and Backdrop -->
+<style>
+    /* Modal background fade effect */
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent black */
+        z-index: 1040;
+        /* Behind the modal but above the rest of the page */
+        transition: opacity 0.3s ease;
+        /* Fade effect */
+        opacity: 0;
+        /* Initially invisible */
+        display: none;
+        /* Initially hidden */
+    }
+
+    /* Modal */
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        z-index: 1050;
+        /* Above the backdrop */
+        width: 300px;
+        display: none;
+        /* Initially hidden */
+    }
+
+    .modal-dialog {
+        background-color: #fff;
+        padding: 20px;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-body {
+        padding: 10px 0;
+    }
+
+    .modalbutton {
+        height: 40px;
+        border-color: rgb(84, 84, 165);
+        color: rgb(43, 43, 148);
+        font-weight: 600;
+    }
+
+    .modalbutton:hover {
+        height: 40px;
+        background-color: rgb(84, 84, 165);
+        border-color: rgb(84, 84, 165);
+        color: white;
+    }
+</style>
